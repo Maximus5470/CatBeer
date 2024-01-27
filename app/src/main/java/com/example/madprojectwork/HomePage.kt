@@ -179,10 +179,10 @@ fun HomeScreen(navController: NavHostController) {
 
     val foodType = listOf(
         home_foodtype(food = "Starters", image = R.drawable.soup_bowl),
-        home_foodtype(food = "Veg"),
-        home_foodtype(food = "Non-Veg"),
-        home_foodtype(food = "Thali"),
-        home_foodtype(food = "Dessert"),
+        home_foodtype(food = "Veg", image = R.drawable.vegetableicon),
+        home_foodtype(food = "Non-Veg", image = R.drawable.chickenicon),
+        home_foodtype(food = "Wraps", image = R.drawable.wrapsicon),
+        home_foodtype(food = "Dessert", image = R.drawable.icecreamcupicon),
     )
     val pagerState1 = rememberPagerState(initialPage = 0, pageCount = { foodList.size })
     val pagerState2 = rememberPagerState(initialPage = 0, pageCount = { restaurantList.size })
@@ -435,10 +435,11 @@ fun Food_RestaurantLayout(
                     Text(
                         text = carousel.name,
                         fontWeight = FontWeight.Bold,
-                        maxLines = 2,
+                        maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                         fontSize = 24.sp,
-                        color = Color.White
+                        color = Color.White,
+                        modifier = Modifier.weight(6f)
                     )
                     if (carousel.isRestaurant) {
                         Icon(
@@ -446,6 +447,7 @@ fun Food_RestaurantLayout(
                             contentDescription = "send",
                             tint = icons_Text,
                             modifier = Modifier.size(25.dp)
+                                .weight(1.5f)
                         )
                     }
                 }
@@ -519,7 +521,8 @@ fun FoodItemCategoryLayout(
                     width = 2.dp,
                     color = icons_Text,
                     shape = RoundedCornerShape(4.dp)
-                ),
+                )
+                .padding(bottom = 4.dp),
             contentAlignment = Alignment.Center
         ) {
             Icon(
@@ -540,7 +543,7 @@ fun FoodItemCategoryLayout(
                 color = icons_Text,
                 fontWeight = FontWeight.Bold,
                 fontSize = 12.sp,
-                modifier = Modifier.padding(bottom = 2.dp)
+                modifier = Modifier.padding(bottom = 4.dp)
             )
         }
     }
