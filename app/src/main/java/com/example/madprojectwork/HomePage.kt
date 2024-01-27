@@ -238,6 +238,7 @@ fun HomeScreen(navController: NavHostController) {
                 }
             )
         }
+        Spacer(modifier = Modifier.height(8.dp))
         //foodList carousel
         Box(
             modifier = Modifier
