@@ -3,6 +3,7 @@ package com.example.madprojectwork
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
@@ -177,7 +178,7 @@ fun HomeScreen(navController: NavHostController) {
     )
 
     val foodType = listOf(
-        home_foodtype(food = "Sea Food"),
+        home_foodtype(food = "Starters", image = R.drawable.soup_bowl),
         home_foodtype(food = "Veg"),
         home_foodtype(food = "Non-Veg"),
         home_foodtype(food = "Thali"),
@@ -509,20 +510,38 @@ fun StarRating(
 fun FoodItemCategoryLayout(
     list: home_foodtype
 ) {
-    Box(
-        modifier = Modifier.size(75.dp),
-        contentAlignment = Alignment.BottomCenter
-    ){
-        Image(
-            painter = painterResource(id = list.image),
-            contentDescription = null,
-            contentScale = ContentScale.Crop
-        )
-        Text(
-            text = list.food,
-            color = Color.White,
-            fontWeight = FontWeight.Bold,
-            fontSize = 12.sp
-        )
+    Box{
+        Box(
+            modifier = Modifier
+                .size(75.dp)
+                .clip(RoundedCornerShape(4.dp))
+                .border(
+                    width = 2.dp,
+                    color = icons_Text,
+                    shape = RoundedCornerShape(4.dp)
+                ),
+            contentAlignment = Alignment.Center
+        ) {
+            Icon(
+                painter = painterResource(id = list.image),
+                contentDescription = null,
+                tint = icons_Text,
+                modifier = Modifier.size(40.dp)
+            )
+        }
+        Spacer(modifier = Modifier.height(4.dp))
+        Box(
+            modifier = Modifier
+                .size(75.dp),
+            contentAlignment = Alignment.BottomCenter
+        ) {
+            Text(
+                text = list.food,
+                color = icons_Text,
+                fontWeight = FontWeight.Bold,
+                fontSize = 12.sp,
+                modifier = Modifier.padding(bottom = 2.dp)
+            )
+        }
     }
 }
