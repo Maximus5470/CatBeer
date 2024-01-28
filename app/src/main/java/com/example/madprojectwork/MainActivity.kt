@@ -72,5 +72,8 @@ fun Navigation() {
         composable(Screens.RestaurantScreen.route) {
             RestaurantScreen(navController = navController)
         }
+        composable(Screens.Gifload.route) {
+            RestaurantScreen(navController = navController)
+        }
     }
 }

@@ -11,15 +11,15 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.rememberLottieComposition
-@Preview(showBackground = true)
+
 @Composable
-fun Gifload() {
+fun Gifload(navController: NavController) {
 
     val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.beer))
 
@@ -36,13 +36,8 @@ fun Gifload() {
                 .size(200.dp),
             isPlaying = true,
             iterations = LottieConstants.IterateForever
-
         )
         Text(text ="please wait while we work on it...")
-
-
-
-
     }
 
 }
