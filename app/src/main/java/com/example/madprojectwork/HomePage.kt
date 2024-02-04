@@ -232,7 +232,6 @@ fun BottomNavNoAnimation(
                             interactionSource = interactionSource,
                             indication = null
                         ) {
-                            //TODO: navigate to the selected screen
                             selectedScreen = screens.indexOf(screen)
                         },
                         screen = screen,
