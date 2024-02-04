@@ -1,5 +1,6 @@
 package com.example.madprojectwork
 
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -11,23 +12,21 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
+import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Check
-import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.outlined.FavoriteBorder
-import androidx.compose.material.icons.outlined.Notifications
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -36,8 +35,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -46,6 +48,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
+import com.example.madprojectwork.dataclasses.Screen
 import com.example.madprojectwork.dataclasses.home_fooditem_restaurant
 import com.example.madprojectwork.dataclasses.home_foodtype
 import com.example.madprojectwork.ui.theme.icons_Text
@@ -65,7 +68,7 @@ fun HomeScreen(navController: NavHostController) {
             stars = 3,
             reviewNumber = 100,
             isRestaurant = false,
-            size = 170.dp,
+            size = 190.dp,
             image = R.drawable.borgir
         ),
         home_fooditem_restaurant(
@@ -74,7 +77,7 @@ fun HomeScreen(navController: NavHostController) {
             stars = 4,
             reviewNumber = 100,
             isRestaurant = false,
-            size = 170.dp,
+            size = 190.dp,
             image = R.drawable.pizzaaa
         ),
         home_fooditem_restaurant(
@@ -83,7 +86,7 @@ fun HomeScreen(navController: NavHostController) {
             stars = 4,
             reviewNumber = 100,
             isRestaurant = false,
-            size = 170.dp,
+            size = 190.dp,
             image = R.drawable.sushi3
         ),
         home_fooditem_restaurant(
@@ -92,7 +95,7 @@ fun HomeScreen(navController: NavHostController) {
             stars = 5,
             reviewNumber = 100,
             isRestaurant = false,
-            size = 170.dp,
+            size = 190.dp,
             image = R.drawable.biryani
         ),
         home_fooditem_restaurant(
@@ -101,7 +104,7 @@ fun HomeScreen(navController: NavHostController) {
             stars = 5,
             reviewNumber = 100,
             isRestaurant = false,
-            size = 170.dp,
+            size = 190.dp,
             image = R.drawable.kebabs3
         ),
         home_fooditem_restaurant(
@@ -110,72 +113,11 @@ fun HomeScreen(navController: NavHostController) {
             stars = 5,
             reviewNumber = 100,
             isRestaurant = false,
-            size = 170.dp,
+            size = 190.dp,
             image = R.drawable.icecream2
         ),
     )
 
-    val restaurantList = listOf(
-        home_fooditem_restaurant(
-            name = "Red Chillies",
-            price = 100,
-            stars = 3,
-            reviewNumber = 251,
-            isRestaurant = true,
-            size = 170.dp,
-            image = R.drawable.borgir,
-            cuisines = "Chinese, Sichuan, Shawarma"
-        ),
-        home_fooditem_restaurant(
-            name = "Mehfil Biryani",
-            price = 100,
-            stars = 3,
-            reviewNumber = 322,
-            isRestaurant = true,
-            size = 170.dp,
-            image = R.drawable.borgir,
-            cuisines = "Chinese, Mughlai, Seafood"
-        ),
-        home_fooditem_restaurant(
-            name = "Bawarchi",
-            price = 100,
-            stars = 5,
-            reviewNumber = 409,
-            isRestaurant = true,
-            size = 170.dp,
-            image = R.drawable.borgir,
-            cuisines = "Seafood, Mughlai, Desserts"
-        ),
-        home_fooditem_restaurant(
-            name = "Pizza Hut",
-            price = 100,
-            stars = 4,
-            reviewNumber = 398,
-            isRestaurant = true,
-            size = 170.dp,
-            image = R.drawable.borgir
-        ),
-        home_fooditem_restaurant(
-            name = "KS Bakers",
-            price = 100,
-            stars = 4,
-            reviewNumber = 593,
-            isRestaurant = true,
-            size = 170.dp,
-            image = R.drawable.borgir,
-            cuisines = "Bakery, Fast Food, Pizza"
-        ),
-        home_fooditem_restaurant(
-            name = "Hotel Sitara Grand",
-            price = 100,
-            stars = 5,
-            reviewNumber = 100,
-            isRestaurant = true,
-            size = 170.dp,
-            image = R.drawable.borgir,
-            cuisines = "Biryani, Chinese, Non-veg"
-        ),
-    )
 
     val foodType = listOf(
         home_foodtype(food = "Starters", image = R.drawable.soup_bowl),
@@ -184,8 +126,7 @@ fun HomeScreen(navController: NavHostController) {
         home_foodtype(food = "Wraps", image = R.drawable.wrapsicon),
         home_foodtype(food = "Dessert", image = R.drawable.icecreamcupicon),
     )
-    val pagerState1 = rememberPagerState(initialPage = 0, pageCount = { foodList.size })
-    val pagerState2 = rememberPagerState(initialPage = 0, pageCount = { restaurantList.size })
+
     val pagerState3 = rememberPagerState(initialPage = 0, pageCount = { foodType.size })
     Column(
         modifier = Modifier
@@ -203,9 +144,9 @@ fun HomeScreen(navController: NavHostController) {
                 color = Color(0xFF724D64)
             )
             Icon(
-                imageVector = Icons.Outlined.Notifications,
+                painter = painterResource(id = R.drawable.baseline_shopping_cart_24),
                 tint = icons_Text,
-                contentDescription = "notification bell"
+                contentDescription = "cart"
             )
         }
         Column(
@@ -245,11 +186,11 @@ fun HomeScreen(navController: NavHostController) {
                 .fillMaxWidth()
                 .background(color = text_Field.copy(alpha = 0.6f))
                 .padding(8.dp)
-        ){
+        ) {
             HorizontalPager(
                 state = pagerState3,
                 pageSpacing = (-270).dp
-            ) {page ->
+            ) { page ->
                 FoodItemCategoryLayout(list = foodType[page])
             }
         }
@@ -274,104 +215,126 @@ fun HomeScreen(navController: NavHostController) {
             )
         }
         Spacer(modifier = Modifier.height(12.dp))
-        //popular food carousel
-        HorizontalPager(
-            state = pagerState1,
+        //popular food 2x2 grid
+        LazyVerticalStaggeredGrid(
+            columns = StaggeredGridCells.Fixed(2),
+            verticalItemSpacing = 8.dp,
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            content = {
+                items(foodList.size) { page ->
+                    Food_RestaurantLayout(navController = navController, carousel = foodList[page])
+                }
+            },
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(4.dp),
-            pageSpacing = (-200).dp
-        ) { page ->
-            Food_RestaurantLayout(
-                carousel = foodList[page],
-                navController = navController
-            )
-        }
-        Spacer(modifier = Modifier.height(20.dp))
-        Row(
-            modifier = Modifier
-                .padding(horizontal = 8.dp)
-                .fillMaxWidth(),
-            verticalAlignment = Alignment.Bottom,
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Text(
-                text = "Restaurants",
-                fontWeight = FontWeight.ExtraBold,
-                color = Color(0xFF724D64),
-                fontSize = 24.sp
-            )
-            Text(
-                text = "See all",
-                color = Color(0xFF724D64),
-                fontWeight = FontWeight.Bold
-            )
-        }
-        //restaurant carousel
-        HorizontalPager(
-            state = pagerState2,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(4.dp),
-            pageSpacing = (-200).dp
-        ) { page ->
-            Food_RestaurantLayout(
-                carousel = restaurantList[page],
-                navController = navController
-            )
-        }
+                .padding(start = 8.dp, end = 8.dp, bottom = 62.dp)
+        )
     }
     Column(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize(),
         verticalArrangement = Arrangement.Bottom
     ) {
-        NavigationBar(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(56.dp),
-            containerColor = icons_Text,
-            tonalElevation = 50.dp
+        BottomNavNoAnimation(
+            screens = listOf(
+                Screen.Favorites,
+                Screen.Home,
+                Screen.Profile
+            )
+        )
+    }
+}
+
+@Composable
+fun BottomNavNoAnimation(
+    screens: List<Screen>
+) {
+    var selectedScreen by remember { mutableStateOf(0) }
+    Box(
+        Modifier
+            .shadow(5.dp)
+            .background(color = icons_Text)
+            .height(60.dp)
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp)
+    ) {
+        Row(
+            Modifier.fillMaxSize(),
+            verticalAlignment = Alignment.CenterVertically,
         ) {
-            IconButton(
-                onClick = { /*TODO*/ },
-                modifier = Modifier
-                    .weight(1f)
-                    .padding(8.dp)
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Favorite,
-                    contentDescription = "favorites",
-                    tint = Color.White
+            for (screen in screens) {
+                val isSelected = screen == screens[selectedScreen]
+                val animatedWeight by animateFloatAsState(targetValue = if (isSelected) 1.5f else 1f,
+                    label = "bottom nav bar animation"
                 )
-            }
-            IconButton(
-                onClick = { /*TODO*/ },
-                modifier = Modifier
-                    .weight(1f)
-                    .padding(8.dp)
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Edit,
-                    contentDescription = "edit",
-                    tint = Color.White
-                )
-            }
-            IconButton(
-                onClick = { /*TODO*/ },
-                modifier = Modifier
-                    .weight(1f)
-                    .padding(8.dp)
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Check,
-                    contentDescription = "check",
-                    tint = Color.White
-                )
+                Box(
+                    modifier = Modifier.weight(animatedWeight),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    val interactionSource = remember { MutableInteractionSource() }
+                    BottomNavItem(
+                        modifier = Modifier.clickable(
+                            interactionSource = interactionSource,
+                            indication = null
+                        ) {
+                            selectedScreen = screens.indexOf(screen)
+                        },
+                        screen = screen,
+                        isSelected = isSelected
+                    )
+                }
             }
         }
     }
 }
 
+@Composable
+private fun BottomNavItem(
+    modifier: Modifier = Modifier,
+    screen: Screen,
+    isSelected: Boolean,
+) {
+    Box(
+        modifier = modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center,
+    ) {
+        Row(
+            modifier = Modifier
+                .height(40.dp)
+                .shadow(
+                    elevation = if (isSelected) 15.dp else 0.dp,
+                    shape = RoundedCornerShape(20.dp)
+                )
+                .background(
+                    color = peach_bg,
+                    shape = RoundedCornerShape(20.dp)
+                ),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center,
+        ) {
+            Icon(
+                rememberVectorPainter(
+                    image = if (isSelected) screen.activeIcon else screen.inactiveIcon
+                ),
+                contentDescription = screen.title,
+                modifier = Modifier
+                    .align(Alignment.CenterVertically)
+                    .fillMaxHeight()
+                    .padding(start = 6.dp, end = 6.dp,)
+                    .alpha(if (isSelected) 1f else .5f)
+                    .size(if (isSelected) 32.dp else 28.dp),
+            )
+
+            if (isSelected) {
+                Text(
+                    text = screen.title,
+                    modifier = Modifier.padding(start = 8.dp, end = 10.dp),
+                    maxLines = 1,
+                )
+            }
+        }
+    }
+}
 
 @Composable
 fun Food_RestaurantLayout(
@@ -447,7 +410,8 @@ fun Food_RestaurantLayout(
                             painter = painterResource(id = R.drawable.sendpics),
                             contentDescription = "send",
                             tint = icons_Text,
-                            modifier = Modifier.size(25.dp)
+                            modifier = Modifier
+                                .size(25.dp)
                                 .weight(1.5f)
                         )
                     }

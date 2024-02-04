@@ -39,5 +39,4 @@ fun Gifload(navController: NavController) {
         )
         Text(text ="please wait while we work on it...")
     }
-
 }
