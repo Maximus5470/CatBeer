@@ -1,6 +1,10 @@
 package com.example.madprojectwork
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.spring
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -18,10 +22,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
-import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
@@ -39,6 +44,8 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -49,6 +56,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import com.example.madprojectwork.dataclasses.Screen
+import com.example.madprojectwork.dataclasses.foodList
 import com.example.madprojectwork.dataclasses.home_fooditem_restaurant
 import com.example.madprojectwork.dataclasses.home_foodtype
 import com.example.madprojectwork.ui.theme.icons_Text
@@ -61,63 +69,6 @@ fun HomeScreen(navController: NavHostController) {
     var searchValue by remember {
         mutableStateOf("")
     }
-    val foodList = listOf(
-        home_fooditem_restaurant(
-            name = "Burger",
-            price = 100,
-            stars = 3,
-            reviewNumber = 100,
-            isRestaurant = false,
-            size = 190.dp,
-            image = R.drawable.borgir
-        ),
-        home_fooditem_restaurant(
-            name = "Pizza",
-            price = 100,
-            stars = 4,
-            reviewNumber = 100,
-            isRestaurant = false,
-            size = 190.dp,
-            image = R.drawable.pizzaaa
-        ),
-        home_fooditem_restaurant(
-            name = "Sushi",
-            price = 100,
-            stars = 4,
-            reviewNumber = 100,
-            isRestaurant = false,
-            size = 190.dp,
-            image = R.drawable.sushi3
-        ),
-        home_fooditem_restaurant(
-            name = "Biryani",
-            price = 100,
-            stars = 5,
-            reviewNumber = 100,
-            isRestaurant = false,
-            size = 190.dp,
-            image = R.drawable.biryani
-        ),
-        home_fooditem_restaurant(
-            name = "Kebabs",
-            price = 100,
-            stars = 5,
-            reviewNumber = 100,
-            isRestaurant = false,
-            size = 190.dp,
-            image = R.drawable.kebabs3
-        ),
-        home_fooditem_restaurant(
-            name = "Ice Cream",
-            price = 100,
-            stars = 5,
-            reviewNumber = 100,
-            isRestaurant = false,
-            size = 190.dp,
-            image = R.drawable.icecream2
-        ),
-    )
-
 
     val foodType = listOf(
         home_foodtype(food = "Starters", image = R.drawable.soup_bowl),
@@ -135,6 +86,7 @@ fun HomeScreen(navController: NavHostController) {
     ) {
         Row(
             horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(start = 8.dp, end = 8.dp, top = 12.dp)
@@ -146,7 +98,10 @@ fun HomeScreen(navController: NavHostController) {
             Icon(
                 painter = painterResource(id = R.drawable.baseline_shopping_cart_24),
                 tint = icons_Text,
-                contentDescription = "cart"
+                contentDescription = "cart",
+                modifier = Modifier.clip(CircleShape)
+                    .clickable { }
+                    .size(30.dp)
             )
         }
         Column(
@@ -216,10 +171,10 @@ fun HomeScreen(navController: NavHostController) {
         }
         Spacer(modifier = Modifier.height(12.dp))
         //popular food 2x2 grid
-        LazyVerticalStaggeredGrid(
-            columns = StaggeredGridCells.Fixed(2),
-            verticalItemSpacing = 8.dp,
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(2),
             horizontalArrangement = Arrangement.spacedBy(8.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
             content = {
                 items(foodList.size) { page ->
                     Food_RestaurantLayout(navController = navController, carousel = foodList[page])
@@ -249,7 +204,7 @@ fun HomeScreen(navController: NavHostController) {
 fun BottomNavNoAnimation(
     screens: List<Screen>
 ) {
-    var selectedScreen by remember { mutableStateOf(0) }
+    var selectedScreen by remember { mutableStateOf(1) }
     Box(
         Modifier
             .shadow(5.dp)
@@ -277,6 +232,7 @@ fun BottomNavNoAnimation(
                             interactionSource = interactionSource,
                             indication = null
                         ) {
+                            //TODO: navigate to the selected screen
                             selectedScreen = screens.indexOf(screen)
                         },
                         screen = screen,
@@ -298,11 +254,20 @@ private fun BottomNavItem(
         modifier = modifier.fillMaxSize(),
         contentAlignment = Alignment.Center,
     ) {
+        val animatedElevation by animateDpAsState(targetValue = if (isSelected) 15.dp else 0.dp)
+        val animatedAlpha by animateFloatAsState(targetValue = if (isSelected) 1f else .5f)
+        val animatedIconSize by animateDpAsState(
+            targetValue = if (isSelected) 26.dp else 20.dp,
+            animationSpec = spring(
+                stiffness = Spring.StiffnessLow,
+                dampingRatio = Spring.DampingRatioMediumBouncy
+            ), label = "animations"
+        )
         Row(
             modifier = Modifier
                 .height(40.dp)
                 .shadow(
-                    elevation = if (isSelected) 15.dp else 0.dp,
+                    elevation = animatedElevation,
                     shape = RoundedCornerShape(20.dp)
                 )
                 .background(
@@ -312,20 +277,20 @@ private fun BottomNavItem(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center,
         ) {
-            Icon(
-                rememberVectorPainter(
-                    image = if (isSelected) screen.activeIcon else screen.inactiveIcon
-                ),
-                contentDescription = screen.title,
+            FlipIcon(
                 modifier = Modifier
                     .align(Alignment.CenterVertically)
                     .fillMaxHeight()
-                    .padding(start = 6.dp, end = 6.dp,)
-                    .alpha(if (isSelected) 1f else .5f)
-                    .size(if (isSelected) 32.dp else 28.dp),
+                    .padding(start = 10.dp, end = 10.dp)
+                    .alpha(animatedAlpha)
+                    .size(animatedIconSize),
+                isActive = isSelected,
+                activeIcon = screen.activeIcon,
+                inactiveIcon = screen.inactiveIcon,
+                contentDescription = screen.title
             )
 
-            if (isSelected) {
+            AnimatedVisibility(visible = isSelected) {
                 Text(
                     text = screen.title,
                     modifier = Modifier.padding(start = 8.dp, end = 10.dp),
@@ -333,6 +298,35 @@ private fun BottomNavItem(
                 )
             }
         }
+    }
+}
+
+@Composable
+fun FlipIcon(
+    modifier: Modifier = Modifier,
+    isActive: Boolean,
+    activeIcon: ImageVector,
+    inactiveIcon: ImageVector,
+    contentDescription: String,
+) {
+    val animationRotation by animateFloatAsState(
+        targetValue = if (isActive) 180f else 0f,
+        animationSpec = spring(
+            stiffness = Spring.StiffnessLow,
+            dampingRatio = Spring.DampingRatioMediumBouncy
+        )
+    )
+    Box(
+        modifier = modifier
+            .graphicsLayer { rotationY = animationRotation },
+        contentAlignment = Alignment.Center,
+    ) {
+        Icon(
+            rememberVectorPainter(image = if (animationRotation > 90f) activeIcon else inactiveIcon),
+            contentDescription = contentDescription,
+            tint = icons_Text,
+            modifier = Modifier.size(28.dp)
+        )
     }
 }
 

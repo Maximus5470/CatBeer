@@ -7,8 +7,9 @@ import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Person
+import androidx.compose.runtime.Immutable
 import androidx.compose.ui.graphics.vector.ImageVector
-
+@Immutable
 sealed class Screen(
     val title: String,
     val activeIcon: ImageVector,
