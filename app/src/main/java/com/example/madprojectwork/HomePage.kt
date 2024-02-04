@@ -47,7 +47,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -55,6 +54,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
+import coil.compose.rememberImagePainter
 import com.example.madprojectwork.dataclasses.Screen
 import com.example.madprojectwork.dataclasses.foodList
 import com.example.madprojectwork.dataclasses.home_fooditem_restaurant
@@ -99,7 +99,8 @@ fun HomeScreen(navController: NavHostController) {
                 painter = painterResource(id = R.drawable.baseline_shopping_cart_24),
                 tint = icons_Text,
                 contentDescription = "cart",
-                modifier = Modifier.clip(CircleShape)
+                modifier = Modifier
+                    .clip(CircleShape)
                     .clickable { }
                     .size(30.dp)
             )
@@ -340,13 +341,17 @@ fun Food_RestaurantLayout(
     val interactionSource = remember { MutableInteractionSource() }
 
     Box {
+        val painter = rememberImagePainter(
+            data = carousel.image,
+            builder = {  }
+        )
         Image(
-            painter = painterResource(carousel.image),
+            painter = painter,
             contentDescription = null,
             modifier = Modifier
                 .size(carousel.size)
                 .clip(RoundedCornerShape(16.dp)),
-            contentScale = ContentScale.Crop,
+            contentScale = androidx.compose.ui.layout.ContentScale.Crop,
             alpha = 0.9f
         )
         Column(
