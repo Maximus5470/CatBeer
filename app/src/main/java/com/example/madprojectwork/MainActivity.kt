@@ -43,25 +43,25 @@ fun Navigation() {
         enterTransition = {
             fadeIn()+slideIntoContainer(
                 towards = AnimatedContentTransitionScope.SlideDirection.Companion.Left,
-                animationSpec = tween(200)
+                animationSpec = tween(300)
             )
         },
         exitTransition = {
             fadeOut()+slideOutOfContainer(
                 towards = AnimatedContentTransitionScope.SlideDirection.Companion.Left,
-                animationSpec = tween(200)
+                animationSpec = tween(300)
             )
         },
         popEnterTransition = {
             fadeIn()+slideIntoContainer(
                 towards = AnimatedContentTransitionScope.SlideDirection.Companion.Right,
-                animationSpec = tween(200)
+                animationSpec = tween(300)
             )
         },
         popExitTransition = {
             fadeOut()+slideOutOfContainer(
                 towards = AnimatedContentTransitionScope.SlideDirection.Companion.Right,
-                animationSpec = tween(200)
+                animationSpec = tween(300)
             )
         }
     ) {

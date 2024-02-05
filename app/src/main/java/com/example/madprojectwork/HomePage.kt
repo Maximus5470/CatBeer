@@ -31,6 +31,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.outlined.FavoriteBorder
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -220,7 +221,8 @@ fun BottomNavNoAnimation(
         ) {
             for (screen in screens) {
                 val isSelected = screen == screens[selectedScreen]
-                val animatedWeight by animateFloatAsState(targetValue = if (isSelected) 1.5f else 1f,
+                val animatedWeight by animateFloatAsState(
+                    targetValue = if (isSelected) 1.5f else 1f,
                     label = "bottom nav bar animation"
                 )
                 Box(
@@ -343,7 +345,9 @@ fun Food_RestaurantLayout(
     Box {
         val painter = rememberImagePainter(
             data = carousel.image,
-            builder = {  }
+            builder = {
+                CircularProgressIndicator()
+            }
         )
         Image(
             painter = painter,
@@ -354,99 +358,100 @@ fun Food_RestaurantLayout(
             contentScale = androidx.compose.ui.layout.ContentScale.Crop,
             alpha = 0.9f
         )
+    }
+    Column(
+        modifier = Modifier
+            .size(carousel.size)
+            .background(
+                color = Color(0xFFB68791).copy(alpha = 0.76f),
+                shape = RoundedCornerShape(16.dp)
+            )
+            .padding(9.dp)
+            .clickable(
+                interactionSource = interactionSource,
+                indication = null
+            ) {
+                navController.navigate(Screens.RestaurantScreen.route)
+            },
+        verticalArrangement = Arrangement.SpaceBetween
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.End
+        ) {
+            Icon(
+                imageVector = if (isLiked) Icons.Default.Favorite else Icons.Outlined.FavoriteBorder,
+                contentDescription = "favorites",
+                tint = icons_Text,
+                modifier = Modifier
+                    .clickable(
+                        interactionSource = interactionSource,
+                        indication = null
+                    ) { isLiked = !isLiked }
+                    .size(28.dp)
+            )
+        }
         Column(
-            modifier = Modifier
-                .size(carousel.size)
-                .background(
-                    color = Color(0xFFB68791).copy(alpha = 0.76f),
-                    shape = RoundedCornerShape(16.dp)
-                )
-                .padding(9.dp)
-                .clickable(
-                    interactionSource = interactionSource,
-                    indication = null
-                ) {
-                    navController.navigate(Screens.RestaurantScreen.route)
-                },
-            verticalArrangement = Arrangement.SpaceBetween
+            modifier = Modifier.fillMaxWidth()
         ) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.End
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                Icon(
-                    imageVector = if (isLiked) Icons.Default.Favorite else Icons.Outlined.FavoriteBorder,
-                    contentDescription = "favorites",
-                    tint = icons_Text,
-                    modifier = Modifier
-                        .clickable(
-                            interactionSource = interactionSource,
-                            indication = null
-                        ) { isLiked = !isLiked }
-                        .size(28.dp)
+                Text(
+                    text = carousel.name,
+                    fontWeight = FontWeight.Bold,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                    fontSize = 24.sp,
+                    color = Color.White,
+                    modifier = Modifier.weight(6f)
                 )
+                if (carousel.isRestaurant) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.sendpics),
+                        contentDescription = "send",
+                        tint = icons_Text,
+                        modifier = Modifier
+                            .size(25.dp)
+                            .weight(1.5f)
+                    )
+                }
             }
-            Column(
-                modifier = Modifier.fillMaxWidth()
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
             ) {
                 Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
-                        text = carousel.name,
-                        fontWeight = FontWeight.Bold,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis,
-                        fontSize = 24.sp,
-                        color = Color.White,
-                        modifier = Modifier.weight(6f)
+                        text = if (carousel.stars > 5) "5.0" else "${carousel.stars}.0",
+                        fontSize = 10.sp,
+                        modifier = Modifier.padding(end = 1.dp),
+                        color = Color.White
                     )
-                    if (carousel.isRestaurant) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.sendpics),
-                            contentDescription = "send",
-                            tint = icons_Text,
-                            modifier = Modifier
-                                .size(25.dp)
-                                .weight(1.5f)
-                        )
-                    }
+                    StarRating(stars = carousel.stars)
+                    Text(
+                        text = "(${carousel.reviewNumber})",
+                        fontSize = 10.sp,
+                        color = Color.White
+                    )
                 }
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Text(
-                            text = if (carousel.stars > 5) "5.0" else "${carousel.stars}.0",
-                            fontSize = 10.sp,
-                            modifier = Modifier.padding(end = 1.dp),
-                            color = Color.White
-                        )
-                        StarRating(stars = carousel.stars)
-                        Text(
-                            text = "(${carousel.reviewNumber})",
-                            fontSize = 10.sp,
-                            color = Color.White
-                        )
-                    }
-                    if (!carousel.isRestaurant) {
-                        Text(
-                            text = "${carousel.price}/-",
-                            fontSize = 16.sp,
-                            color = Color.White
-                        )
-                    }
+                if (!carousel.isRestaurant) {
+                    Text(
+                        text = "${carousel.price}/-",
+                        fontSize = 16.sp,
+                        color = Color.White
+                    )
                 }
             }
         }
     }
 }
+
 
 @Composable
 fun StarRating(
@@ -475,7 +480,7 @@ fun StarRating(
 fun FoodItemCategoryLayout(
     list: home_foodtype
 ) {
-    Box{
+    Box {
         Box(
             modifier = Modifier
                 .size(75.dp)
@@ -488,8 +493,13 @@ fun FoodItemCategoryLayout(
                 .padding(bottom = 4.dp),
             contentAlignment = Alignment.Center
         ) {
+            val painter = rememberImagePainter(
+                data = list.image,
+                builder = { }
+            )
+
             Icon(
-                painter = painterResource(id = list.image),
+                painter = painter,
                 contentDescription = null,
                 tint = icons_Text,
                 modifier = Modifier.size(40.dp)
