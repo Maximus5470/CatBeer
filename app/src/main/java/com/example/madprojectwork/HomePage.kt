@@ -1,6 +1,7 @@
 package com.example.madprojectwork
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.animateFloatAsState
@@ -64,7 +65,7 @@ import com.example.madprojectwork.ui.theme.icons_Text
 import com.example.madprojectwork.ui.theme.peach_bg
 import com.example.madprojectwork.ui.theme.text_Field
 
-@OptIn(ExperimentalFoundationApi::class)
+@OptIn(ExperimentalFoundationApi::class, ExperimentalAnimationApi::class)
 @Composable
 fun HomeScreen(navController: NavHostController) {
     var searchValue by remember {
@@ -201,7 +202,7 @@ fun HomeScreen(navController: NavHostController) {
         )
     }
 }
-
+@ExperimentalAnimationApi
 @Composable
 fun BottomNavNoAnimation(
     screens: List<Screen>
@@ -245,7 +246,7 @@ fun BottomNavNoAnimation(
         }
     }
 }
-
+@ExperimentalAnimationApi
 @Composable
 private fun BottomNavItem(
     modifier: Modifier = Modifier,
