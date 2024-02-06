@@ -4,12 +4,20 @@ plugins {
 }
 
 android {
+    signingConfigs {
+        create("release") {
+            storeFile = file("D:\\CatBeer\\release_key.jks")
+            storePassword = "catbeer69"
+            keyAlias = "release_key"
+            keyPassword = "catbeer69"
+        }
+    }
     namespace = "com.example.madprojectwork"
     compileSdk = 34
 
     defaultConfig {
         applicationId = "com.example.madprojectwork"
-        minSdk = 31
+        minSdk = 23
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -27,6 +35,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            signingConfig = signingConfigs.getByName("release")
         }
     }
     compileOptions {
@@ -52,7 +61,10 @@ android {
 dependencies {
     implementation("androidx.navigation:navigation-compose:2.7.6")
     implementation("com.airbnb.android:lottie-compose:6.3.0")
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
+    implementation ("androidx.lifecycle:lifecycle-livedata-ktx:2.7.0")
     implementation("io.coil-kt:coil-compose:2.5.0")
+
 
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")

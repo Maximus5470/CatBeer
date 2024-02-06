@@ -12,7 +12,7 @@
         android:roundIcon="@mipmap/newapplogo_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Madprojectwork"
-        tools:targetApi="31">
+        >
         <activity
             android:name=".MainActivity"
             android:exported="true"
