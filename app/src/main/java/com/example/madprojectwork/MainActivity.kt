@@ -43,25 +43,25 @@ fun Navigation() {
         enterTransition = {
             fadeIn()+slideIntoContainer(
                 towards = AnimatedContentTransitionScope.SlideDirection.Companion.Left,
-                animationSpec = tween(300)
+                animationSpec = tween(200)
             )
         },
         exitTransition = {
             fadeOut()+slideOutOfContainer(
                 towards = AnimatedContentTransitionScope.SlideDirection.Companion.Left,
-                animationSpec = tween(300)
+                animationSpec = tween(200)
             )
         },
         popEnterTransition = {
             fadeIn()+slideIntoContainer(
                 towards = AnimatedContentTransitionScope.SlideDirection.Companion.Right,
-                animationSpec = tween(300)
+                animationSpec = tween(200)
             )
         },
         popExitTransition = {
             fadeOut()+slideOutOfContainer(
                 towards = AnimatedContentTransitionScope.SlideDirection.Companion.Right,
-                animationSpec = tween(300)
+                animationSpec = tween(200)
             )
         }
     ) {
@@ -79,6 +79,15 @@ fun Navigation() {
         }
         composable(Screens.OrderConfirmation.route) {
             ConfirmationPage(navController = navController)
+        }
+        composable(Screens.Favorites.route) {
+            Favourite(navController = navController)
+        }
+        composable(Screens.Dashboard.route) {
+            DashboardScreen(navController = navController)
+        }
+        composable(Screens.Mainlayout.route) {
+            MainLayout(navController = navController)
         }
     }
 }

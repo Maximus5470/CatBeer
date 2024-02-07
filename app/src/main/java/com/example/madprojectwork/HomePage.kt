@@ -1,6 +1,5 @@
 package com.example.madprojectwork
 
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateDpAsState
@@ -34,9 +33,13 @@ import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
+import androidx.compose.material3.Tab
+import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -188,64 +191,73 @@ fun HomeScreen(navController: NavHostController) {
                 .padding(start = 8.dp, end = 8.dp, bottom = 62.dp)
         )
     }
-    Column(
-        modifier = Modifier
-            .fillMaxSize(),
-        verticalArrangement = Arrangement.Bottom
-    ) {
-        BottomNavNoAnimation(
-            screens = listOf(
-                Screen.Favorites,
-                Screen.Home,
-                Screen.Profile
-            )
-        )
-    }
+
 }
-@ExperimentalAnimationApi
+
+@OptIn(ExperimentalFoundationApi::class, ExperimentalAnimationApi::class)
 @Composable
-fun BottomNavNoAnimation(
-    screens: List<Screen>
-) {
-    var selectedScreen by remember { mutableStateOf(1) }
+fun MainLayout(navController: NavHostController) {
+    val tabitem = listOf(
+        Screen.Favorites,
+        Screen.Home,
+        Screen.Profile
+    )
+    var tabindex by remember { mutableIntStateOf(1) }
+    val pagerState = rememberPagerState(initialPage = 1, pageCount = {tabitem.size})
+
+    LaunchedEffect(key1 = tabindex){
+        pagerState.animateScrollToPage(tabindex)
+    }
+    LaunchedEffect(key1 = pagerState.currentPage){
+        tabindex = pagerState.currentPage
+    }
     Box(
-        Modifier
-            .shadow(5.dp)
-            .background(color = icons_Text)
-            .height(60.dp)
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp)
+        modifier = Modifier
+            .fillMaxSize()
+            .background(peach_bg)
     ) {
-        Row(
-            Modifier.fillMaxSize(),
-            verticalAlignment = Alignment.CenterVertically,
+        Column {
+            HorizontalPager(
+                state = pagerState,
+                modifier = Modifier.fillMaxWidth()
+                ) { page ->
+                when (page) {
+                    0 -> Favourite(navController = navController)
+                    1 -> HomeScreen(navController = navController)
+                    2 -> DashboardScreen(navController = navController)
+                }
+            }
+        }
+        Column(modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.Bottom
         ) {
-            for (screen in screens) {
-                val isSelected = screen == screens[selectedScreen]
-                val animatedWeight by animateFloatAsState(
-                    targetValue = if (isSelected) 1.5f else 1f,
-                    label = "bottom nav bar animation"
-                )
-                Box(
-                    modifier = Modifier.weight(animatedWeight),
-                    contentAlignment = Alignment.Center,
-                ) {
-                    val interactionSource = remember { MutableInteractionSource() }
-                    BottomNavItem(
-                        modifier = Modifier.clickable(
-                            interactionSource = interactionSource,
-                            indication = null
-                        ) {
-                            selectedScreen = screens.indexOf(screen)
+            TabRow(
+                containerColor = icons_Text,
+                contentColor = icons_Text,
+                selectedTabIndex = tabindex,
+                divider = { },
+                indicator = { }
+            ) {
+                tabitem.forEachIndexed { index, item ->
+                    Tab(
+                        modifier = Modifier.fillMaxWidth(),
+                        selected = (index == tabindex),
+                        onClick = {
+                            tabindex = index
                         },
-                        screen = screen,
-                        isSelected = isSelected
+                        icon = {
+                            BottomNavItem(
+                                screen = tabitem[index],
+                                isSelected = (index == tabindex)
+                            )
+                        }
                     )
                 }
             }
         }
     }
 }
+
 @ExperimentalAnimationApi
 @Composable
 private fun BottomNavItem(
@@ -260,7 +272,7 @@ private fun BottomNavItem(
         val animatedElevation by animateDpAsState(targetValue = if (isSelected) 15.dp else 0.dp)
         val animatedAlpha by animateFloatAsState(targetValue = if (isSelected) 1f else .5f)
         val animatedIconSize by animateDpAsState(
-            targetValue = if (isSelected) 26.dp else 20.dp,
+            targetValue = if (isSelected) 28.dp else 22.dp,
             animationSpec = spring(
                 stiffness = Spring.StiffnessLow,
                 dampingRatio = Spring.DampingRatioMediumBouncy
@@ -284,7 +296,7 @@ private fun BottomNavItem(
                 modifier = Modifier
                     .align(Alignment.CenterVertically)
                     .fillMaxHeight()
-                    .padding(start = 10.dp, end = 10.dp)
+                    .padding(horizontal = 9.dp)
                     .alpha(animatedAlpha)
                     .size(animatedIconSize),
                 isActive = isSelected,
@@ -292,14 +304,6 @@ private fun BottomNavItem(
                 inactiveIcon = screen.inactiveIcon,
                 contentDescription = screen.title
             )
-
-            AnimatedVisibility(visible = isSelected) {
-                Text(
-                    text = screen.title,
-                    modifier = Modifier.padding(start = 8.dp, end = 10.dp),
-                    maxLines = 1,
-                )
-            }
         }
     }
 }

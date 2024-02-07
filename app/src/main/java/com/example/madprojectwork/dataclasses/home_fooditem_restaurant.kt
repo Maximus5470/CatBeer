@@ -5,7 +5,6 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.example.madprojectwork.R
 
-@Immutable
 data class home_fooditem_restaurant(
     val name: String,
     val price: Int,

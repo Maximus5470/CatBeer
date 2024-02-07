@@ -235,7 +235,7 @@ fun LoginScreen(navController: NavHostController) {
                 .background(color = icons_Text, shape = CircleShape)
                 .clip(CircleShape)
                 .clickable {
-                    navController.navigate(Screens.HomeScreen.route)
+                    navController.navigate(Screens.Mainlayout.route)
                 },
             contentAlignment = Alignment.Center
         ) {

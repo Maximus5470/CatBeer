@@ -1,7 +1,7 @@
 package com.example.madprojectwork
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.ArrowBack
@@ -20,31 +21,19 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.madprojectwork.ui.theme.icons_Text
 import com.example.madprojectwork.ui.theme.peach_bg
 import com.example.madprojectwork.ui.theme.text_Field
 
 @OptIn(ExperimentalMaterial3Api::class)
-@Preview
 @Composable
-fun DashboardScreen() {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(color = peach_bg)
-    ) {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(color = peach_bg)
-                .weight(3f)
-        )
-    }
+fun DashboardScreen(navController: NavController) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -71,6 +60,10 @@ fun DashboardScreen() {
                     contentDescription = "back arrow",
                     tint = Color.Black,
                     modifier = Modifier.padding(12.dp)
+                        .clip(CircleShape)
+                        .clickable{
+                            navController.popBackStack()
+                        }
                 )
             }
         )
