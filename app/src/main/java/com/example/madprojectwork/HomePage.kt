@@ -203,12 +203,12 @@ fun MainLayout(navController: NavHostController) {
         Screen.Profile
     )
     var tabindex by remember { mutableIntStateOf(1) }
-    val pagerState = rememberPagerState(initialPage = 1, pageCount = {tabitem.size})
+    val pagerState = rememberPagerState(initialPage = 1, pageCount = { tabitem.size })
 
-    LaunchedEffect(key1 = tabindex){
+    LaunchedEffect(key1 = tabindex) {
         pagerState.animateScrollToPage(tabindex)
     }
-    LaunchedEffect(key1 = pagerState.currentPage){
+    LaunchedEffect(key1 = pagerState.currentPage) {
         tabindex = pagerState.currentPage
     }
     Box(
@@ -217,18 +217,14 @@ fun MainLayout(navController: NavHostController) {
             .background(peach_bg)
     ) {
         Column {
-            HorizontalPager(
-                state = pagerState,
-                modifier = Modifier.fillMaxWidth()
-                ) { page ->
-                when (page) {
-                    0 -> Favourite(navController = navController)
-                    1 -> HomeScreen(navController = navController)
-                    2 -> DashboardScreen(navController = navController)
-                }
+            when (tabindex) {
+                0 -> Favourite(navController = navController)
+                1 -> HomeScreen(navController = navController)
+                2 -> DashboardScreen(navController = navController)
             }
         }
-        Column(modifier = Modifier.fillMaxSize(),
+        Column(
+            modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.Bottom
         ) {
             TabRow(

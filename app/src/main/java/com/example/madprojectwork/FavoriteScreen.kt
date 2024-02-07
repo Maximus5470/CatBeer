@@ -74,6 +74,7 @@ fun Favourite(navController: NavController) {
                 text = "Monkey D. Luffy",
                 fontSize = 15.sp,
                 overflow = TextOverflow.Ellipsis,
+                color = Color.White
             )
             Divider(
                 modifier = Modifier

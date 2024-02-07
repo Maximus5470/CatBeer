@@ -6,7 +6,8 @@ plugins {
 android {
     signingConfigs {
         create("release") {
-            storeFile = file("D:\\CatBeer\\release_key.jks")
+            storeFile =
+                file("C:\\Users\\GAUTHAM SHARMA\\StudioProjects\\Madprojectwork\\release_key.jks")
             storePassword = "catbeer69"
             keyAlias = "release_key"
             keyPassword = "catbeer69"
