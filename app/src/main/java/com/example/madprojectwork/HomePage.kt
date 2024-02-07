@@ -188,7 +188,7 @@ fun HomeScreen(navController: NavHostController) {
             },
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = 8.dp, end = 8.dp, bottom = 62.dp)
+                .padding(start = 8.dp, end = 8.dp, bottom = 66.dp)
         )
     }
 
@@ -236,7 +236,7 @@ fun MainLayout(navController: NavHostController) {
             ) {
                 tabitem.forEachIndexed { index, item ->
                     Tab(
-                        modifier = Modifier.fillMaxWidth(),
+                        modifier = Modifier.fillMaxWidth().height(64.dp),
                         selected = (index == tabindex),
                         onClick = {
                             tabindex = index
@@ -267,8 +267,9 @@ private fun BottomNavItem(
     ) {
         val animatedElevation by animateDpAsState(targetValue = if (isSelected) 15.dp else 0.dp)
         val animatedAlpha by animateFloatAsState(targetValue = if (isSelected) 1f else .5f)
+        val animatedHeight by animateFloatAsState(targetValue = if (isSelected) 50f else 42f)
         val animatedIconSize by animateDpAsState(
-            targetValue = if (isSelected) 28.dp else 22.dp,
+            targetValue = if (isSelected) 32.dp else 24.dp,
             animationSpec = spring(
                 stiffness = Spring.StiffnessLow,
                 dampingRatio = Spring.DampingRatioMediumBouncy
@@ -276,14 +277,14 @@ private fun BottomNavItem(
         )
         Row(
             modifier = Modifier
-                .height(40.dp)
+                .height(animatedHeight.dp)
                 .shadow(
                     elevation = animatedElevation,
-                    shape = RoundedCornerShape(20.dp)
+                    shape = CircleShape
                 )
                 .background(
                     color = peach_bg,
-                    shape = RoundedCornerShape(20.dp)
+                    shape = CircleShape
                 ),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center,
@@ -292,7 +293,7 @@ private fun BottomNavItem(
                 modifier = Modifier
                     .align(Alignment.CenterVertically)
                     .fillMaxHeight()
-                    .padding(horizontal = 9.dp)
+                    .padding(horizontal = 10.dp)
                     .alpha(animatedAlpha)
                     .size(animatedIconSize),
                 isActive = isSelected,
@@ -328,7 +329,7 @@ fun FlipIcon(
             rememberVectorPainter(image = if (animationRotation > 90f) activeIcon else inactiveIcon),
             contentDescription = contentDescription,
             tint = icons_Text,
-            modifier = Modifier.size(28.dp)
+            modifier = Modifier.size(32.dp)
         )
     }
 }
