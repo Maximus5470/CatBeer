@@ -26,14 +26,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
 import com.example.madprojectwork.ui.theme.icons_Text
 import com.example.madprojectwork.ui.theme.peach_bg
 import com.example.madprojectwork.ui.theme.text_Field
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Favourite(navController: NavController) {
+fun Favourite() {
     Column(
         modifier = Modifier
             .fillMaxSize()
