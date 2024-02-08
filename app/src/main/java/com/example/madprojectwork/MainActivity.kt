@@ -80,12 +80,6 @@ fun Navigation() {
         composable(Screens.OrderConfirmation.route) {
             ConfirmationPage(navController = navController)
         }
-        composable(Screens.Favorites.route) {
-            Favourite(navController = navController)
-        }
-        composable(Screens.Dashboard.route) {
-            DashboardScreen(navController = navController)
-        }
         composable(Screens.Mainlayout.route) {
             MainLayout(navController = navController)
         }

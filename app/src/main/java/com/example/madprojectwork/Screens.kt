@@ -8,7 +8,5 @@ sealed class Screens(
     data object RestaurantScreen : Screens("restaurant_screen")
     data object Gifload : Screens("loading_screen")
     data object OrderConfirmation : Screens("confirmation_screen")
-    data object Favorites : Screens("favorites_screen")
-    data object Dashboard : Screens("dashboard_screen")
     data object Mainlayout : Screens("mainlayout_screen")
 }
