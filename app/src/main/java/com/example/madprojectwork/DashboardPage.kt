@@ -44,10 +44,10 @@ fun DashboardScreen(navController: NavController) {
                 Icon(
                     imageVector = Icons.Default.AccountCircle,
                     contentDescription = "Account",
-                    tint = Color.White,
+                    tint = icons_Text,
                     modifier = Modifier
                         .padding(12.dp)
-                        .size(32.dp)
+                        .size(42.dp)
                 )
             },
         )
@@ -69,23 +69,16 @@ fun DashboardScreen(navController: NavController) {
                     fontSize = 14.sp,
                     color = Color.White,
                 )
-                Text(
-                    text = "+91 9876543210",
-                    fontSize = 14.sp,
-                    color = Color.White,
-                )
             }
-            Spacer(modifier = Modifier.padding(8.dp))
             Divider(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp),
                 color = Color.Black
             )
-            Spacer(modifier = Modifier.padding(8.dp))
         }
         Spacer(modifier = Modifier.height(24.dp))
         Text(
             text = "Details",
-            fontSize = 32.sp,
+            fontSize = 28.sp,
             fontWeight = FontWeight.Bold,
             color = icons_Text,
             modifier = Modifier.padding(start = 12.dp)
@@ -107,7 +100,7 @@ fun DashboardScreen(navController: NavController) {
         Spacer(modifier = Modifier.height(20.dp))
         Text(
             text = "Order History",
-            fontSize = 32.sp,
+            fontSize = 28.sp,
             fontWeight = FontWeight.Bold,
             color = icons_Text,
             modifier = Modifier.padding(start = 12.dp)
