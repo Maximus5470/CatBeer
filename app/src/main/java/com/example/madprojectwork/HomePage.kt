@@ -218,9 +218,9 @@ fun MainLayout(navController: NavHostController) {
     ) {
         Column {
             when (tabindex) {
-                0 -> Favourite(navController = navController)
+                0 -> Favourite()
                 1 -> HomeScreen(navController = navController)
-                2 -> DashboardScreen(navController = navController)
+                2 -> DashboardScreen()
             }
         }
         Column(
@@ -267,9 +267,9 @@ private fun BottomNavItem(
     ) {
         val animatedElevation by animateDpAsState(targetValue = if (isSelected) 15.dp else 0.dp)
         val animatedAlpha by animateFloatAsState(targetValue = if (isSelected) 1f else .5f)
-        val animatedHeight by animateFloatAsState(targetValue = if (isSelected) 50f else 42f)
+        val animatedHeight by animateFloatAsState(targetValue = if (isSelected) 52f else 42f)
         val animatedIconSize by animateDpAsState(
-            targetValue = if (isSelected) 32.dp else 24.dp,
+            targetValue = if (isSelected) 32.dp else 22.dp,
             animationSpec = spring(
                 stiffness = Spring.StiffnessLow,
                 dampingRatio = Spring.DampingRatioMediumBouncy
