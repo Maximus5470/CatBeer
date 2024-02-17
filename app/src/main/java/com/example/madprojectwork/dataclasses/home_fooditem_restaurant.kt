@@ -17,6 +17,7 @@ data class home_fooditem_restaurant(
     val distance: String? = "",
     val cuisines: String? = "",
     var isLiked: MutableState<Boolean> = mutableStateOf(false),
+    var isOrdered: MutableState<Boolean> = mutableStateOf(false),
 )
 val foodList = listOf(
     home_fooditem_restaurant(

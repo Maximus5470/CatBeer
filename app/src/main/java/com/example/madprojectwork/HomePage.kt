@@ -94,7 +94,7 @@ fun MainLayout(navController: NavHostController) {
             when (tabindex) {
                 0 -> Favourite(navController = navController)
                 1 -> HomeScreen(navController = navController)
-                2 -> DashboardScreen()
+                2 -> DashboardScreen(navController = navController)
             }
         }
         Column(
