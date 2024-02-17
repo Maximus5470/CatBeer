@@ -70,6 +70,66 @@ import com.example.madprojectwork.ui.theme.text_Field
 
 @OptIn(ExperimentalFoundationApi::class, ExperimentalAnimationApi::class)
 @Composable
+fun MainLayout(navController: NavHostController) {
+    val tabitem = listOf(
+        Screen.Favorites,
+        Screen.Home,
+        Screen.Profile
+    )
+    var tabindex by remember { mutableIntStateOf(1) }
+    val pagerState = rememberPagerState(initialPage = 1, pageCount = { tabitem.size })
+
+    LaunchedEffect(key1 = tabindex) {
+        pagerState.animateScrollToPage(tabindex)
+    }
+    LaunchedEffect(key1 = pagerState.currentPage) {
+        tabindex = pagerState.currentPage
+    }
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(peach_bg)
+    ) {
+        Column {
+            when (tabindex) {
+                0 -> Favourite(navController = navController)
+                1 -> HomeScreen(navController = navController)
+                2 -> DashboardScreen()
+            }
+        }
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.Bottom
+        ) {
+            TabRow(
+                containerColor = icons_Text,
+                contentColor = icons_Text,
+                selectedTabIndex = tabindex,
+                divider = { },
+                indicator = { }
+            ) {
+                tabitem.forEachIndexed { index, item ->
+                    Tab(
+                        modifier = Modifier.fillMaxWidth().height(64.dp),
+                        selected = (index == tabindex),
+                        onClick = {
+                            tabindex = index
+                        },
+                        icon = {
+                            BottomNavItem(
+                                screen = tabitem[index],
+                                isSelected = (index == tabindex)
+                            )
+                        }
+                    )
+                }
+            }
+        }
+    }
+}
+
+@OptIn(ExperimentalFoundationApi::class, ExperimentalAnimationApi::class)
+@Composable
 fun HomeScreen(navController: NavHostController) {
     var searchValue by remember {
         mutableStateOf("")
@@ -194,66 +254,6 @@ fun HomeScreen(navController: NavHostController) {
 
 }
 
-@OptIn(ExperimentalFoundationApi::class, ExperimentalAnimationApi::class)
-@Composable
-fun MainLayout(navController: NavHostController) {
-    val tabitem = listOf(
-        Screen.Favorites,
-        Screen.Home,
-        Screen.Profile
-    )
-    var tabindex by remember { mutableIntStateOf(1) }
-    val pagerState = rememberPagerState(initialPage = 1, pageCount = { tabitem.size })
-
-    LaunchedEffect(key1 = tabindex) {
-        pagerState.animateScrollToPage(tabindex)
-    }
-    LaunchedEffect(key1 = pagerState.currentPage) {
-        tabindex = pagerState.currentPage
-    }
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(peach_bg)
-    ) {
-        Column {
-            when (tabindex) {
-                0 -> Favourite()
-                1 -> HomeScreen(navController = navController)
-                2 -> DashboardScreen()
-            }
-        }
-        Column(
-            modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.Bottom
-        ) {
-            TabRow(
-                containerColor = icons_Text,
-                contentColor = icons_Text,
-                selectedTabIndex = tabindex,
-                divider = { },
-                indicator = { }
-            ) {
-                tabitem.forEachIndexed { index, item ->
-                    Tab(
-                        modifier = Modifier.fillMaxWidth().height(64.dp),
-                        selected = (index == tabindex),
-                        onClick = {
-                            tabindex = index
-                        },
-                        icon = {
-                            BottomNavItem(
-                                screen = tabitem[index],
-                                isSelected = (index == tabindex)
-                            )
-                        }
-                    )
-                }
-            }
-        }
-    }
-}
-
 @ExperimentalAnimationApi
 @Composable
 private fun BottomNavItem(
@@ -339,9 +339,6 @@ fun Food_RestaurantLayout(
     navController: NavController,
     carousel: home_fooditem_restaurant
 ) {
-    var isLiked by remember {
-        mutableStateOf(false)
-    }
     val interactionSource = remember { MutableInteractionSource() }
 
     Box {
@@ -382,14 +379,16 @@ fun Food_RestaurantLayout(
             horizontalArrangement = Arrangement.End
         ) {
             Icon(
-                imageVector = if (isLiked) Icons.Default.Favorite else Icons.Outlined.FavoriteBorder,
+                imageVector = if (carousel.isLiked.value) Icons.Default.Favorite else Icons.Outlined.FavoriteBorder,
                 contentDescription = "favorites",
                 tint = icons_Text,
                 modifier = Modifier
                     .clickable(
                         interactionSource = interactionSource,
                         indication = null
-                    ) { isLiked = !isLiked }
+                    ) {
+                        carousel.isLiked.value = !carousel.isLiked.value
+                    }
                     .size(28.dp)
             )
         }

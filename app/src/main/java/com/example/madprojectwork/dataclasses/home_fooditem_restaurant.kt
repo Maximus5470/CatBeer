@@ -1,5 +1,7 @@
 package com.example.madprojectwork.dataclasses
 
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.example.madprojectwork.R
@@ -13,7 +15,8 @@ data class home_fooditem_restaurant(
     val size: Dp,
     val image: Int,
     val distance: String? = "",
-    val cuisines: String? = ""
+    val cuisines: String? = "",
+    var isLiked: MutableState<Boolean> = mutableStateOf(false),
 )
 val foodList = listOf(
     home_fooditem_restaurant(
@@ -23,7 +26,7 @@ val foodList = listOf(
         reviewNumber = 100,
         isRestaurant = false,
         size = 190.dp,
-        image = R.drawable.borgir
+        image = R.drawable.borgir,
     ),
     home_fooditem_restaurant(
         name = "Pizza",

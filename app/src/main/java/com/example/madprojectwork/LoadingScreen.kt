@@ -18,8 +18,6 @@ import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.rememberLottieComposition
 
-
-
 @Composable
 fun Gifload(navController: NavController) {
 
