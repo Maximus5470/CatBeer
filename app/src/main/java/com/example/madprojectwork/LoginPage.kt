@@ -53,6 +53,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.example.madprojectwork.dataclasses.profileList
 import com.example.madprojectwork.ui.theme.icons_Text
 import com.example.madprojectwork.ui.theme.peach_bg
 import com.example.madprojectwork.ui.theme.text_Field
@@ -71,10 +72,13 @@ fun LoginScreen(navController: NavHostController) {
     var isVisible by remember {
         mutableStateOf(true)
     }
-    var interactionSource = remember { MutableInteractionSource() }
+    val interactionSource = remember { MutableInteractionSource() }
     var isSignUp by remember {
         mutableStateOf(false)
     }
+
+    profileList[0].phone.value = phonevalue
+    profileList[0].password.value = passwordvalue
 
     Column(
         modifier = Modifier
@@ -235,7 +239,13 @@ fun LoginScreen(navController: NavHostController) {
                 .background(color = icons_Text, shape = CircleShape)
                 .clip(CircleShape)
                 .clickable {
-                    navController.navigate(Screens.Mainlayout.route)
+                    if (isSignUp) if (profileList[0].phone.value.length == 10 && passwordvalue == confirmpasswordvalue) navController.navigate(
+                        Screens.Mainlayout.route
+                    ) else { }
+
+                    else if (profileList[0].phone.value.length == 10 && profileList[0].phone.value == phonevalue && profileList[0].password.value == passwordvalue) navController.navigate(
+                        Screens.Mainlayout.route
+                    ) else { }
                 },
             contentAlignment = Alignment.Center
         ) {

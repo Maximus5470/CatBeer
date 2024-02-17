@@ -27,9 +27,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.madprojectwork.dataclasses.foodList
+import com.example.madprojectwork.dataclasses.profileList
 import com.example.madprojectwork.ui.theme.icons_Text
 import com.example.madprojectwork.ui.theme.peach_bg
 import com.example.madprojectwork.ui.theme.text_Field
+import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -70,7 +72,7 @@ fun DashboardScreen(navController: NavHostController) {
                 modifier = Modifier.padding(start = 12.dp)
             ) {
                 Text(
-                    text = "V.KARTHICC",
+                    text = profileList[0].name.uppercase(Locale.ROOT),
                     fontSize = 14.sp,
                     color = Color.White,
                 )
@@ -92,12 +94,12 @@ fun DashboardScreen(navController: NavHostController) {
             modifier = Modifier.padding(start = 32.dp)
         ) {
             Text(
-                text = "V.KARTHICC",
+                text = profileList[0].name,
                 fontSize = 14.sp,
                 color = Color.Black,
             )
             Text(
-                text = "+91 9876543210",
+                text = profileList[0].phone.value,
                 fontSize = 14.sp,
                 color = Color.Black,
             )
