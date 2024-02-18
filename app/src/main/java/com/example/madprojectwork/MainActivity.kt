@@ -82,5 +82,8 @@ fun Navigation() {
         composable(Screens.Mainlayout.route) {
             MainLayout(navController = navController)
         }
+        composable(Screens.ConfrimationPage.route) {
+            ConfirmationPage(navController = navController)
+        }
     }
 }

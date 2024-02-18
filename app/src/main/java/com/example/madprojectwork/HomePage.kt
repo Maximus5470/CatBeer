@@ -370,7 +370,7 @@ fun Food_RestaurantLayout(
                 interactionSource = interactionSource,
                 indication = null
             ) {
-                navController.navigate(Screens.RestaurantScreen.route)
+                navController.navigate(Screens.ConfrimationPage.route)
             },
         verticalArrangement = Arrangement.SpaceBetween
     ) {
