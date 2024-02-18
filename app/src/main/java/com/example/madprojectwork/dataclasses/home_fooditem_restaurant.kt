@@ -21,7 +21,7 @@ data class home_fooditem_restaurant(
 )
 val foodList = listOf(
     home_fooditem_restaurant(
-        name = "Burger",
+        name = "Burger1",
         price = 100,
         stars = 3,
         reviewNumber = 100,
@@ -30,7 +30,7 @@ val foodList = listOf(
         image = R.drawable.borgir,
     ),
     home_fooditem_restaurant(
-        name = "Pizza",
+        name = "Pizza1",
         price = 100,
         stars = 4,
         reviewNumber = 100,
@@ -39,7 +39,7 @@ val foodList = listOf(
         image = R.drawable.pizzaaa
     ),
     home_fooditem_restaurant(
-        name = "Sushi",
+        name = "Sushi1",
         price = 100,
         stars = 4,
         reviewNumber = 100,
@@ -48,7 +48,7 @@ val foodList = listOf(
         image = R.drawable.sushi3
     ),
     home_fooditem_restaurant(
-        name = "Biryani",
+        name = "Biryani1",
         price = 100,
         stars = 5,
         reviewNumber = 100,
@@ -57,7 +57,7 @@ val foodList = listOf(
         image = R.drawable.biryani
     ),
     home_fooditem_restaurant(
-        name = "Kebabs",
+        name = "Kebabs1",
         price = 100,
         stars = 5,
         reviewNumber = 100,
@@ -66,7 +66,7 @@ val foodList = listOf(
         image = R.drawable.kebabs3
     ),
     home_fooditem_restaurant(
-        name = "Ice Cream",
+        name = "Ice Cream1",
         price = 100,
         stars = 5,
         reviewNumber = 100,
@@ -75,7 +75,7 @@ val foodList = listOf(
         image = R.drawable.icecream2
     ),
     home_fooditem_restaurant(
-        name = "Burger",
+        name = "Burger2",
         price = 100,
         stars = 3,
         reviewNumber = 100,
@@ -84,7 +84,7 @@ val foodList = listOf(
         image = R.drawable.borgir
     ),
     home_fooditem_restaurant(
-        name = "Pizza",
+        name = "Pizza2",
         price = 100,
         stars = 4,
         reviewNumber = 100,
@@ -93,7 +93,7 @@ val foodList = listOf(
         image = R.drawable.pizzaaa
     ),
     home_fooditem_restaurant(
-        name = "Sushi",
+        name = "Sushi2",
         price = 100,
         stars = 4,
         reviewNumber = 100,
@@ -102,7 +102,7 @@ val foodList = listOf(
         image = R.drawable.sushi3
     ),
     home_fooditem_restaurant(
-        name = "Biryani",
+        name = "Biryani2",
         price = 100,
         stars = 5,
         reviewNumber = 100,
@@ -111,7 +111,7 @@ val foodList = listOf(
         image = R.drawable.biryani
     ),
     home_fooditem_restaurant(
-        name = "Kebabs",
+        name = "Kebabs2",
         price = 100,
         stars = 5,
         reviewNumber = 100,
@@ -120,7 +120,7 @@ val foodList = listOf(
         image = R.drawable.kebabs3
     ),
     home_fooditem_restaurant(
-        name = "Ice Cream",
+        name = "Ice Cream2",
         price = 100,
         stars = 5,
         reviewNumber = 100,

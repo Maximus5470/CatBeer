@@ -98,7 +98,8 @@ fun Favourite(navController: NavHostController) {
                 items(likedFoodList.size) { page ->
                     Food_RestaurantLayout(
                         navController = navController,
-                        carousel = likedFoodList[page]
+                        carousel = likedFoodList[page],
+                        page = page
                     )
                 }
             },

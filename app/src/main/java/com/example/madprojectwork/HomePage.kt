@@ -68,6 +68,8 @@ import com.example.madprojectwork.ui.theme.icons_Text
 import com.example.madprojectwork.ui.theme.peach_bg
 import com.example.madprojectwork.ui.theme.text_Field
 
+var index: Int = -1
+
 @OptIn(ExperimentalFoundationApi::class, ExperimentalAnimationApi::class)
 @Composable
 fun MainLayout(navController: NavHostController) {
@@ -128,7 +130,7 @@ fun MainLayout(navController: NavHostController) {
     }
 }
 
-@OptIn(ExperimentalFoundationApi::class, ExperimentalAnimationApi::class)
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun HomeScreen(navController: NavHostController) {
     var searchValue by remember {
@@ -243,7 +245,7 @@ fun HomeScreen(navController: NavHostController) {
             verticalArrangement = Arrangement.spacedBy(8.dp),
             content = {
                 items(foodList.size) { page ->
-                    Food_RestaurantLayout(navController = navController, carousel = foodList[page])
+                    Food_RestaurantLayout(navController = navController, carousel = foodList[page], page)
                 }
             },
             modifier = Modifier
@@ -337,7 +339,8 @@ fun FlipIcon(
 @Composable
 fun Food_RestaurantLayout(
     navController: NavController,
-    carousel: home_fooditem_restaurant
+    carousel: home_fooditem_restaurant,
+    page : Int
 ) {
     val interactionSource = remember { MutableInteractionSource() }
 
@@ -370,7 +373,8 @@ fun Food_RestaurantLayout(
                 interactionSource = interactionSource,
                 indication = null
             ) {
-                navController.navigate(Screens.ConfrimationPage.route)
+                index = page
+                navController.navigate(Screens.OrderConfirmationPage.route)
             },
         verticalArrangement = Arrangement.SpaceBetween
     ) {

@@ -120,7 +120,8 @@ fun DashboardScreen(navController: NavHostController) {
                 items(OrderedFoodList.size) { page ->
                     Food_RestaurantLayout(
                         navController = navController,
-                        carousel = OrderedFoodList[page]
+                        carousel = OrderedFoodList[page],
+                        page = page
                     )
                 }
             },
