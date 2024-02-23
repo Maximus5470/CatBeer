@@ -66,6 +66,9 @@ fun DashboardScreen(navController: NavHostController) {
                     modifier = Modifier
                         .padding(6.dp)
                         .size(42.dp)
+                        .clickable {
+                            navController.popBackStack(Screens.LoginScreen.route, false)
+                        }
                 )
                 Icon(
                     imageVector = Icons.Default.Info,
