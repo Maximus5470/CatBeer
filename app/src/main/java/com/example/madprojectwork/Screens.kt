@@ -9,4 +9,5 @@ sealed class Screens(
     data object Gifload : Screens("loading_screen")
     data object Mainlayout : Screens("mainlayout_screen")
     data object OrderConfirmationPage : Screens("confirmorder_screen")
+    data object FAQPage : Screens("faq_screen")
 }

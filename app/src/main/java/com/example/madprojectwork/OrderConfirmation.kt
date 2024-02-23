@@ -101,23 +101,35 @@ fun ConfirmationPage(navController: NavController) {
             )
         }
         Spacer(modifier = Modifier.height(12.dp))
-        Text(text = "How many items do you want?", color = icons_Text, style = MaterialTheme.typography.bodyMedium, fontSize = 16.sp)
+        Text(
+            text = "How many items do you want?",
+            color = icons_Text,
+            style = MaterialTheme.typography.bodyMedium,
+            fontSize = 16.sp
+        )
         var count by remember { mutableIntStateOf(0) }
 
         Spacer(modifier = Modifier.height(12.dp))
-        Row (
+        Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Box(modifier = Modifier
-                .size(50.dp)
-                .clip(CircleShape)
-                .clickable(onClick = { if (count > 0) count-- })
-                .background(color = icons_Text),
+            Box(
+                modifier = Modifier
+                    .size(50.dp)
+                    .clip(CircleShape)
+                    .clickable(onClick = { if (count > 0) count-- })
+                    .background(color = icons_Text),
                 contentAlignment = Alignment.Center
             ) {
-                Text(text = "-", color = Color.White, style = MaterialTheme.typography.titleMedium, textAlign = TextAlign.Center, fontSize = 24.sp)
+                Text(
+                    text = "-",
+                    color = Color.White,
+                    style = MaterialTheme.typography.titleMedium,
+                    textAlign = TextAlign.Center,
+                    fontSize = 24.sp
+                )
             }
 
             Spacer(modifier = Modifier.width(10.dp))
@@ -138,14 +150,21 @@ fun ConfirmationPage(navController: NavController) {
                 )
             }
             Spacer(modifier = Modifier.width(10.dp))
-            Box(modifier = Modifier
-                .size(50.dp)
-                .clip(CircleShape)
-                .clickable(onClick = { count++ })
-                .background(color = icons_Text),
+            Box(
+                modifier = Modifier
+                    .size(50.dp)
+                    .clip(CircleShape)
+                    .clickable(onClick = { count++ })
+                    .background(color = icons_Text),
                 contentAlignment = Alignment.Center
             ) {
-                Text(text = "+", color = Color.White, style = MaterialTheme.typography.titleMedium, textAlign = TextAlign.Center, fontSize = 24.sp)
+                Text(
+                    text = "+",
+                    color = Color.White,
+                    style = MaterialTheme.typography.titleMedium,
+                    textAlign = TextAlign.Center,
+                    fontSize = 24.sp
+                )
             }
         }
 
@@ -154,7 +173,7 @@ fun ConfirmationPage(navController: NavController) {
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Bottom,
         horizontalAlignment = Alignment.CenterHorizontally
-        ) {
+    ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()

@@ -84,5 +84,8 @@ fun Navigation() {
         ) {
             ConfirmationPage(navController = navController)
         }
+        composable(Screens.FAQPage.route) {
+            FAQPage(navController = navController)
+        }
     }
 }

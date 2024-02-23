@@ -76,7 +76,6 @@ fun LoginScreen(navController: NavHostController) {
     var isSignUp by remember {
         mutableStateOf(false)
     }
-
     profileList[0].phone.value = phonevalue
     profileList[0].password.value = passwordvalue
 
@@ -227,7 +226,7 @@ fun LoginScreen(navController: NavHostController) {
                         .clickable(
                             interactionSource = interactionSource,
                             indication = null
-                        ) { },
+                        ) { isSignUp = !isSignUp },
                     textAlign = TextAlign.Right
                 )
             }
