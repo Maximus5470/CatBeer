@@ -13,6 +13,7 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material.icons.filled.ExitToApp
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -56,6 +57,14 @@ fun DashboardScreen(navController: NavHostController) {
                         .padding(12.dp)
                         .size(42.dp)
                 )
+                Icon(
+                    imageVector = Icons.Filled.ExitToApp,
+                    contentDescription = "Logout",
+                    tint = icons_Text,
+                    modifier = Modifier
+                        .padding(6.dp)
+                        .size(42.dp)
+                )
             },
         )
         Column(
@@ -78,7 +87,9 @@ fun DashboardScreen(navController: NavHostController) {
                 )
             }
             Divider(
-                modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 8.dp),
                 color = Color.Black
             )
         }
