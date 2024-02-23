@@ -99,7 +99,7 @@ fun CartScreen(navController: NavHostController) {
             Spacer(modifier = Modifier.height(19.dp))
         }
         Text(
-            text = "Order History",
+            text = "Ordered Food Items:",
             fontSize = 28.sp,
             fontWeight = FontWeight.Bold,
             color = icons_Text,
