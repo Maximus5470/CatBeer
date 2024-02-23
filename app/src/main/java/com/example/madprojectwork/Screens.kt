@@ -10,4 +10,5 @@ sealed class Screens(
     data object Mainlayout : Screens("mainlayout_screen")
     data object OrderConfirmationPage : Screens("confirmorder_screen")
     data object FAQPage : Screens("faq_screen")
+    data object CartPage : Screens("cart_screen")
 }

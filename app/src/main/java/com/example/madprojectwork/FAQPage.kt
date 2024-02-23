@@ -56,7 +56,7 @@ fun FAQPage(navController: NavHostController) {
             navigationIcon = {
                 Icon(
                     imageVector = Icons.Default.ArrowBack,
-                    contentDescription = "Account",
+                    contentDescription = "back arrow",
                     tint = Color.Black,
                     modifier = Modifier
                         .padding(12.dp)

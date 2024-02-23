@@ -168,7 +168,9 @@ fun HomeScreen(navController: NavHostController) {
                 contentDescription = "cart",
                 modifier = Modifier
                     .clip(CircleShape)
-                    .clickable { }
+                    .clickable {
+                        navController.navigate(Screens.CartPage.route)
+                    }
                     .size(30.dp)
             )
         }

@@ -87,5 +87,8 @@ fun Navigation() {
         composable(Screens.FAQPage.route) {
             FAQPage(navController = navController)
         }
+        composable(Screens.CartPage.route) {
+            CartScreen(navController = navController)
+        }
     }
 }
