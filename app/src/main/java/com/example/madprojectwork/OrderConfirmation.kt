@@ -1,10 +1,16 @@
 package com.example.madprojectwork
 
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
+import androidx.compose.animation.with
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -18,6 +24,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -38,6 +47,7 @@ import com.example.madprojectwork.ui.theme.icons_Text
 import com.example.madprojectwork.ui.theme.peach_bg
 
 
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun ConfirmationPage(navController: NavController) {
     val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.hungryunhappy))
@@ -90,8 +100,55 @@ fun ConfirmationPage(navController: NavController) {
                 textAlign = TextAlign.Center
             )
         }
-        //just for some extra space (shh!!! no one needs to know it)
-        Text(text = "\n\n\n\n")
+        Spacer(modifier = Modifier.height(12.dp))
+        Text(text = "How many items do you want?", color = icons_Text, style = MaterialTheme.typography.bodyMedium, fontSize = 16.sp)
+        var count by remember { mutableIntStateOf(0) }
+
+        Spacer(modifier = Modifier.height(12.dp))
+        Row (
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Box(modifier = Modifier
+                .size(50.dp)
+                .clip(CircleShape)
+                .clickable(onClick = { if (count > 0) count-- })
+                .background(color = icons_Text),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(text = "-", color = Color.White, style = MaterialTheme.typography.titleMedium, textAlign = TextAlign.Center, fontSize = 24.sp)
+            }
+
+            Spacer(modifier = Modifier.width(10.dp))
+            AnimatedContent(
+                targetState = count,
+                transitionSpec = {
+                    if (targetState > initialState) {
+                        slideInVertically { -it } with slideOutVertically { it }
+                    } else {
+                        slideInVertically { it } with slideOutVertically { -it }
+                    }
+                }, label = ""
+            ) { count ->
+                Text(
+                    "$count",
+                    style = MaterialTheme.typography.titleMedium,
+                    textAlign = TextAlign.Center,
+                )
+            }
+            Spacer(modifier = Modifier.width(10.dp))
+            Box(modifier = Modifier
+                .size(50.dp)
+                .clip(CircleShape)
+                .clickable(onClick = { count++ })
+                .background(color = icons_Text),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(text = "+", color = Color.White, style = MaterialTheme.typography.titleMedium, textAlign = TextAlign.Center, fontSize = 24.sp)
+            }
+        }
+
     }
     Column(
         modifier = Modifier.fillMaxSize(),
